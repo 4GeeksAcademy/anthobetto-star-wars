@@ -5,7 +5,7 @@ import { Context } from "../store/appContext.js";
 export const Navbar = () => {
 	const { store } = useContext(Context) // 3. 2. 1
 	return (
-		<nav className="navbar navbar-dark bg-dark mb-3">
+		<nav className="navbar navbar-dark bg-dark">
       <div className="container-fluid d-flex justify-content-between mx-md-4 mt-2 mb-1">
         <div>
           <Link className="navbar-brand" to="/">

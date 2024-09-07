@@ -15,7 +15,7 @@ export const Contacts = () => {
         navigate('/edit-contact')
     }
     return (
-        <div className="container bg-dark mb-3">
+        <div className="container bg-dark mt-4 mb-3">
             <div className="navbar navbar-dark bg-dark">
                 <h1 className="text-light pt-4">Contacts</h1>
                 <Link to="/add-contact">

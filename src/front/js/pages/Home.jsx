@@ -6,10 +6,8 @@ export const Home = () => {
 	const { store, actions } = useContext(Context);
 
 	return (
-		<div className="page-container">
-			<div className="content-wrap text-center mt-4">
-			<h1>En Construcción 🚧</h1>
+			<div>
+			<img src="https://wallpaperaccess.com/full/3782099.jpg" className="img-fluid" alt="star-wars-poster" />
 			</div>
-		</div>	
 	);
 };
