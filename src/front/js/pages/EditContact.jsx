@@ -1,13 +1,14 @@
 import React, { useContext, useState } from "react";
 import { Context } from "../store/appContext.js";
 import { useNavigate } from "react-router-dom";
-export const AddContact = () => {
-    const [name, setName] = useState('')
-    const [phone, setPhone] = useState('')
-    const [email, setEmail] = useState('')
-    const [address, setAdress] = useState('')
+export const EditContact = () => {
     const { store, actions } = useContext(Context)
+    const editContact = store.currentContacts
     const navigate = useNavigate()
+    const [name, setName] = useState(editContact.name);
+    const [phone, setPhone] = useState(editContact.phone);
+    const [email, setEmail] = useState(editContact.email);
+    const [address, setAdress] = useState(editContact.address);
     const handleSubmit = async (event) => {
         event.preventDefault();
         const dataToSend = {
@@ -16,15 +17,16 @@ export const AddContact = () => {
             "email": email,
             "address": address,
         }
-        actions.addContact(dataToSend);
+        actions.editContact(editContact.id, dataToSend);
+        actions.setCurrentContacts({});
         navigate('/contacts');
-    };
+};
     const handleCancel = () => {
-        navigate('/contacts');
-    };
+    navigate('/contacts');
+};
     return (
         <div className="container">
-            <h1 className="justify-content-center">Add new contact</h1>
+            <h1 className="justify-content-center">Edit contact</h1>
             <form className="row g-3" onSubmit={handleSubmit}>
                 <div className="col-12 my-4">
                     <input type="text" className="form-control" placeholder="Full Name" aria-label="Full Name" value={name} onChange={(event) => setName(event.target.value)} />
