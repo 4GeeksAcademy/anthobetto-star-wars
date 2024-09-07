@@ -4,6 +4,9 @@ import { Link, useNavigate } from "react-router-dom";
 export const Contacts = () => {
     const { store, actions } = useContext(Context);
     const navigate = useNavigate()
+
+    actions.getContacts(); 
+
     const deleteContact = (id) => {
         actions.deleteContact(id)
     }

@@ -32,7 +32,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                 getContacts()
             },
             getContacts: async () => {
-                const uri = `${getStore().host}/agendas/${getStore().user}/contacts`;
+                const uri = `${getStore().host}/agendas/${getStore().user}`;
                 const options = {
                     method: 'GET'
                 };
