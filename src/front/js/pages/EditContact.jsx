@@ -25,7 +25,7 @@ export const EditContact = () => {
     navigate('/contacts');
 };
     return (
-        <div className="container">
+        <div className="container mt-4">
             <h1 className="justify-content-center">Edit contact</h1>
             <form className="row g-3" onSubmit={handleSubmit}>
                 <div className="col-12 my-4">
