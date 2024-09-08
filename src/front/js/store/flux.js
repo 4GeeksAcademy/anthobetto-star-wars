@@ -29,20 +29,30 @@ const getState = ({ getStore, getActions, setStore }) => {
                 if (!response.ok) {
                     return
                 }
-                getContacts()
             },
             getContacts: async () => {
                 const uri = `${getStore().host}/agendas/${getStore().user}`;
                 const options = {
                     method: 'GET'
                 };
-                const response = await fetch(uri, options);
-                console.log(response);
-                if (!response.ok) {
-                    return createUser()
+                try {
+                    const response = await fetch(uri, options);
+                    if (!response.ok) {
+                        console.log("Agenda no encontrada. Intentando crear una nueva agenda...");
+                        const userCreated = await getActions().createUser();
+                        if (userCreated) {
+                            return getActions().getContacts();
+                        } else {
+                            console.error("Error al crear la agenda. No se pueden obtener contactos.");
+                            return;
+                        }
+                    }
+                    const data = await response.json();
+                    setStore({ contacts: data.contacts });
+                    console.log("Contactos obtenidos correctamente:", data.contacts);
+                } catch (error) {
+                    console.error("Error al obtener contactos:", error);
                 }
-                const data = await response.json();
-                setStore({contacts: data.contacts});
             },
             editContact: async (id, dataToSend) => {
                 const uri = `${getStore().host}/agendas/${getStore().user}/contacts/${id}`

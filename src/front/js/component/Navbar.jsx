@@ -5,7 +5,7 @@ import { Context } from "../store/appContext.js";
 export const Navbar = () => {
 	const { store } = useContext(Context) // 3. 2. 1
 	return (
-		<nav className="navbar navbar-dark bg-dark">
+		<nav className="navbar navbar-dark bg-warning">
       <div className="container-fluid d-flex justify-content-between mx-md-4 mt-2 mb-1">
         <div>
           <Link className="navbar-brand" to="/">
@@ -36,7 +36,7 @@ export const Navbar = () => {
             </li>
             <li className="nav-item">
               <div className="dropdown">
-                <button className="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <button className="btn btn-dark dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                   Favorites
                   <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-warning text-dark">0</span>
                 </button>

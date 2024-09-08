@@ -5,7 +5,7 @@ export const AddContact = () => {
     const [name, setName] = useState('')
     const [phone, setPhone] = useState('')
     const [email, setEmail] = useState('')
-    const [address, setAdress] = useState('')
+    const [address, setAddress] = useState('')
     const { store, actions } = useContext(Context)
     const navigate = useNavigate()
     const handleSubmit = async (event) => {
@@ -36,7 +36,7 @@ export const AddContact = () => {
                     <input type="tel" className="form-control" placeholder="Enter phone" value={phone} onChange={(event) => setPhone(event.target.value)} />
                 </div>
                 <div className="col-12 my-4">
-                    <input type="text" className="form-control" placeholder="Enter address" value={address} onChange={(event) => setAdress(event.target.value)} />
+                    <input type="text" className="form-control" placeholder="Enter address" value={address} onChange={(event) => setAddress(event.target.value)} />
                 </div>
                 <div className="col-12 my-4 d-flex justify-content-end">
                     <button type="submit" className="btn btn-dark me-3">Save</button>
