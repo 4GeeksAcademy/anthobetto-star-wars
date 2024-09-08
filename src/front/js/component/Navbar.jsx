@@ -37,11 +37,11 @@ export const Navbar = () => {
             <li className="nav-item">
               <div className="dropdown">
                 <button className="btn btn-dark dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  Favorites
+                  Starred
                   <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-warning text-dark">0</span>
                 </button>
                 <ul className="dropdown-menu dropdown-menu-dark dropdown-menu-lg-end">
-                  <li><span className="dropdown-item">No favorites selected</span></li>
+                  <li><span className="dropdown-item">No starred favorites</span></li>
                 </ul>
               </div>
             </li>
