@@ -1,11 +1,16 @@
 const getState = ({ getStore, getActions, setStore }) => {
     return {
         store: {
+            // Contact-list API
             host: 'https://playground.4geeks.com/contact',
             message: null,
             user: 'anthobetto',
             contacts: [],
             currentContacts: {},
+
+            // Star Wats API
+            hostStarWarsAPI: 'https://swapi.tech/api',
+            characters: [],
         },
         actions: {
             getMessage: async () => {
@@ -95,6 +100,25 @@ const getState = ({ getStore, getActions, setStore }) => {
                 }
                 getActions().getContacts();
             },
+            // Star Wars
+
+            getCharacters: async () => {
+				const uri = `${getStore().hostStarWarsAPI}/people`
+				const options = {
+					headers: {"Content-Type": "application/json"},
+					method: 'GET'
+				}
+				const response = await fetch(uri, options)
+				console.log(response);
+				if (!response.ok) {
+					console.log('Error: ', response.status, response.statusText)
+					return
+				}
+				const data = await response.json()
+				setStore({characters: data.results})
+                
+			},
+
         }
     };
 };
