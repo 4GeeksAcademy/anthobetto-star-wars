@@ -5,7 +5,7 @@ export const Contacts = () => {
     const { store, actions } = useContext(Context);
     const navigate = useNavigate()
 
-    actions.getContacts(); 
+    actions.getContacts();
 
     const deleteContact = (id) => {
         actions.deleteContact(id)
@@ -17,9 +17,9 @@ export const Contacts = () => {
     return (
         <div className="container bg-dark mt-4 mb-3">
             <div className="navbar navbar-dark bg-dark">
-                <h1 className="text-light pt-4">Contacts</h1>
+                <h1 className="text-light pt-2">Contacts</h1>
                 <Link to="/add-contact">
-                    <button className="btn btn-secondary">Add Contact</button>
+                    <button className="btn btn-warning">Add Contact</button>
                 </Link>
             </div>
             <ul>
@@ -57,7 +57,7 @@ export const Contacts = () => {
                                     <div className="col-2 col-md-2 d-flex align-items-center justify-content-center">
                                         <div className="d-flex justify-content-evenly">
                                             <span onClick={() => editContact(item)}>
-                                            <i class="fa-solid fa-user-pen"></i>
+                                                <i class="fa-solid fa-user-pen"></i>
                                             </span>
                                             <span onClick={() => deleteContact(item.id)}>
                                                 <i className="fas fa-trash text-danger ms-2"></i>
