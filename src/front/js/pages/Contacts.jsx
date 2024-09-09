@@ -30,7 +30,7 @@ export const Contacts = () => {
                                 <div className="row g-0 bg-secondary bg-opacity-10">
                                     <div className="col-3 col-md-2 p-2 d-flex align-items-center justify-content-center">
                                         <img
-                                            src="https://www.kindpng.com/picc/m/31-312039_transparent-stormtrooper-clipart-trooper-star-wars-vector-hd.png"
+                                            src="https://www.pngall.com/wp-content/uploads/9/Star-Wars-R2-D2-PNG-Picture-180x180.png"
                                             className="img-fluid rounded-circle"
                                             style={{ width: "100px", height: "100px" }}
                                             alt="Star Wars - Soldier"

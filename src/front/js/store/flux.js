@@ -11,6 +11,9 @@ const getState = ({ getStore, getActions, setStore }) => {
             // Star Wats API
             hostStarWarsAPI: 'https://swapi.tech/api',
             characters: [],
+            currentPagePeople: 1,
+            planets: [],
+            starships: [],
         },
         actions: {
             getMessage: async () => {
@@ -103,20 +106,36 @@ const getState = ({ getStore, getActions, setStore }) => {
             // Star Wars
 
             getCharacters: async () => {
-				const uri = `${getStore().hostStarWarsAPI}/people`
-				const options = {
-					headers: {"Content-Type": "application/json"},
-					method: 'GET'
-				}
-				const response = await fetch(uri, options)
+				const response = await fetch(`${getStore().hostStarWarsAPI}/people?page=${getStore().currentPagePeople}&limit=10`)
 				console.log(response);
 				if (!response.ok) {
 					console.log('Error: ', response.status, response.statusText)
 					return
 				}
 				const data = await response.json()
-				setStore({characters: data.results})
-                
+                setStore({characters: data.results})
+			},
+
+            getPlanets: async () => {
+				const response = await fetch(`${getStore().hostStarWarsAPI}/planets`)
+				console.log(response);
+				if (!response.ok) {
+					console.log('Error: ', response.status, response.statusText)
+					return
+				}
+				const data = await response.json()
+                setStore({planets: data.results})
+			},
+
+            getStarships: async () => {
+				const response = await fetch(`${getStore().hostStarWarsAPI}/starships`)
+				console.log(response);
+				if (!response.ok) {
+					console.log('Error: ', response.status, response.statusText)
+					return
+				}
+				const data = await response.json()
+                setStore({starships: data.results})
 			},
 
         }

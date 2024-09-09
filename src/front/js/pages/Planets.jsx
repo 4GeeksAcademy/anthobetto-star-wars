@@ -3,17 +3,17 @@ import { Context } from "../store/appContext";
 import { useNavigate } from "react-router-dom";
 import { Spinner } from "../component/Spinner.jsx";
 
-export const Characters = () => {
+export const Planets = () => {
     const { store, actions } = useContext(Context);
-    actions.getCharacters();
+    actions.getPlanets();
     const navigate = useNavigate()
 
-    // crear handle pagination (recibe un parámetro (y quizás un handle por previus and next))
-    // dentro de la función llamo un action que cambie el currentPagePeople (le envío el número)
-    // dentro de la función llamo a getCharacters 
+    const handleError = (event) => {
+        event.target.src = 'https://starwars-visualguide.com/assets/img/placeholder.jpg'
+    }
 
     const viewMore = (uid) => {
-        navigate('/character-information/${uid}')
+        navigate('/planets-information/${uid}')
     }
 
     return (
@@ -38,14 +38,16 @@ export const Characters = () => {
                 </ul>
             </nav>
             <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 g-2">
-                {store.characters.length === 0 ? Spinner() :
-                    store.characters.map(item => (
+                {store.planets.length === 0 ? Spinner() :
+                    store.planets.map(item => (
                         <div key={item.uid} className="col">
-                            <div className="card my-3 mx-2">
+                            <div className="card my-3 mx-2 md-3">
                                 <img
-                                    src={`https://starwars-visualguide.com/assets/img/characters/${item.uid}.jpg`}
+                                    src={`https://starwars-visualguide.com/assets/img/planets/${item.uid}.jpg`}
                                     className="card-img-top"
                                     alt={item.name}
+                                    onError={handleError}
+                                    class="img-fluid w-100"
                                 />
                                 <div className="card-body">
                                     <h5 className="card-title">{item.name}</h5>
