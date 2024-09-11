@@ -16,6 +16,8 @@ import { EditContact } from "./pages/EditContact.jsx";
 import { Characters } from "./pages/Characters.jsx";
 import { Planets } from "./pages/Planets.jsx";
 import { Starships } from "./pages/Starships.jsx";
+import { CharacterInformation } from "./pages/CharacterInformation.jsx";
+
 //create your first component
 const Layout = () => {
     //the basename is used when your project is published in a subdirectory and not in the root of the domain
@@ -31,6 +33,7 @@ const Layout = () => {
                         <Route element={<Home />} path="/" />
                         <Route element={<AddContact />} path="/add-contact" />
                         <Route element={<Characters />} path="/characters" />
+                        <Route element={<CharacterInformation />} path="characters/:uid" />
                         <Route element={<Planets />} path="/planets" />
                         <Route element={<Starships />} path="/starships" />
                         <Route element={<Contacts />} path="/contacts" />

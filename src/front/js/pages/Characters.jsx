@@ -13,8 +13,8 @@ export const Characters = () => {
     // dentro de la función llamo a getCharacters 
 
     const viewMore = (uid) => {
-        navigate('/character-information/${uid}')
-    }
+        navigate(`/characters/${uid}`);
+    };
 
     return (
         <div className="container mt-5 mb-5">
@@ -52,10 +52,10 @@ export const Characters = () => {
                                 </div>
                                 <div className="card-footer d-flex justify-content-between align-items-center">
                                     <div className="btn-group">
-                                        <button type="button" className="btn btn-sm bg-warning" onClick={() => viewMore(item)}>View more</button>
+                                        <button type="button" className="btn btn-sm bg-warning" onClick={() => viewMore(item.uid)}>View more</button>
                                     </div>
                                     <span className="text-body-secondary">
-                                        <i className="fa-regular fa-heart"></i>
+                                        <i className="fa-regular fa-heart" onClick={() => favs(item)}></i>
                                     </span>
                                 </div>
                             </div>

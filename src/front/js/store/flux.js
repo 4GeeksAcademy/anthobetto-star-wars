@@ -14,6 +14,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             currentPagePeople: 1,
             planets: [],
             starships: [],
+            characterInformation: {},
         },
         actions: {
             getMessage: async () => {
@@ -106,6 +107,10 @@ const getState = ({ getStore, getActions, setStore }) => {
             // Star Wars
 
             getCharacters: async () => {
+                if (localStorage.getItem('characters')) {
+					setStore({ characters: JSON.parse(localStorage.getItem('characters'))})
+					return
+				}
 				const response = await fetch(`${getStore().hostStarWarsAPI}/people?page=${getStore().currentPagePeople}&limit=10`)
 				console.log(response);
 				if (!response.ok) {
@@ -114,9 +119,14 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 				const data = await response.json()
                 setStore({characters: data.results})
+                localStorage.setItem('characters', JSON.stringify(data.results))
 			},
 
             getPlanets: async () => {
+                if (localStorage.getItem('planets')) {
+					setStore({ planets: JSON.parse(localStorage.getItem('planets'))})
+					return
+				}
 				const response = await fetch(`${getStore().hostStarWarsAPI}/planets`)
 				console.log(response);
 				if (!response.ok) {
@@ -125,9 +135,14 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 				const data = await response.json()
                 setStore({planets: data.results})
+                localStorage.setItem('planets', JSON.stringify(data.results))
 			},
 
             getStarships: async () => {
+                if (localStorage.getItem('starships')) {
+					setStore({ starships: JSON.parse(localStorage.getItem('starships'))})
+					return
+				}
 				const response = await fetch(`${getStore().hostStarWarsAPI}/starships`)
 				console.log(response);
 				if (!response.ok) {
@@ -136,7 +151,14 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 				const data = await response.json()
                 setStore({starships: data.results})
+                localStorage.setItem('starships', JSON.stringify(data.results))
 			},
+            getCharacterInformation: async (uid) => {
+				const response = await fetch(`${getStore().hostStarWarsAPI}/people/${uid}`)
+				if (!response.ok) { return }
+				const data = await response.json();
+				setStore( {characterInformation:  data.result.properties })
+			}
 
         }
     };
