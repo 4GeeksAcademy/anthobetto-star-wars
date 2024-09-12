@@ -9,12 +9,12 @@ export const Starships = () => {
     const navigate = useNavigate()
 
     const handleError = (event) => {
-        event.target.src='https://starwars-visualguide.com/assets/img/placeholder.jpg'
+        event.target.src = 'https://starwars-visualguide.com/assets/img/placeholder.jpg'
     }
 
     const viewMore = (uid) => {
-        navigate('/starships-information/${uid}')
-    }
+        navigate(`/starships/${uid}`);
+    };
     return (
         <div className="container mt-5 mb-5">
             <nav aria-label="Page navigation example">
@@ -46,13 +46,15 @@ export const Starships = () => {
                                 className="card-img-top"
                                 alt={item.name}
                                 onError={handleError}
+                                style = {{aspectRatio:"1/1", width:'100%'}}
+   
                             />
                             <div className="card-body">
                                 <h5 className="card-title">{item.name}</h5>
                             </div>
                             <div className="card-footer d-flex justify-content-between align-items-center">
                                 <div className="btn-group">
-                                    <button type="button" className="btn btn-sm bg-warning" onClick={() => viewMore(item)}>View more</button>
+                                    <button type="button" className="btn btn-sm bg-warning" onClick={() => viewMore(item.uid)}>View more</button>
                                 </div>
                                 <span className="text-body-secondary">
                                     <i className="fa-regular fa-heart"></i>

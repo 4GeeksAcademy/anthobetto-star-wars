@@ -10,6 +10,9 @@ export const CharacterInformation = () => {
 
     useEffect(() => {
         actions.getCharacterInformation(params.uid);
+        return () => {
+            actions.clearCharacterInformation();
+        };
     }, []);
 
     return (

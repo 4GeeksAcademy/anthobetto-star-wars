@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { Context } from "../store/appContext.js";
+import { FavsStarWars } from "./FavsStarWars.jsx";
 
 export const Navbar = () => {
 	const { store } = useContext(Context) // 3. 2. 1
@@ -35,15 +36,7 @@ export const Navbar = () => {
               </Link>
             </li>
             <li className="nav-item">
-              <div className="dropdown">
-                <button className="btn btn-dark dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  Starred
-                  <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-warning text-dark">0</span>
-                </button>
-                <ul className="dropdown-menu dropdown-menu-dark dropdown-menu-lg-end">
-                  <li><span className="dropdown-item">No starred favorites</span></li>
-                </ul>
-              </div>
+              <FavsStarWars/>
             </li>
           </ul>
         </div>
