@@ -57,8 +57,8 @@ export const Starships = () => {
                                     <button type="button" className="btn btn-sm bg-warning" onClick={() => viewMore(item.uid)}>View more</button>
                                 </div>
                                 <span className="text-body-secondary">
-                                    <i className="fa-regular fa-heart"></i>
-                                </span>
+                                        <i className="fa-regular fa-heart" onClick={() => actions.addToFavorites({name: item.name, type: 'Starships'})}></i>
+                                    </span>
                             </div>
                         </div>
                     </div>
