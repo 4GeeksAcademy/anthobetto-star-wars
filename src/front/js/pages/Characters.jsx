@@ -8,10 +8,6 @@ export const Characters = () => {
     actions.getCharacters();
     const navigate = useNavigate()
 
-    // crear handle pagination (recibe un parámetro (y quizás un handle por previus and next))
-    // dentro de la función llamo un action que cambie el currentPagePeople (le envío el número)
-    // dentro de la función llamo a getCharacters 
-
     const viewMore = (uid) => {
         navigate(`/characters/${uid}`);
     };
@@ -55,7 +51,7 @@ export const Characters = () => {
                                         <button type="button" className="btn btn-sm bg-warning" onClick={() => viewMore(item.uid)}>View more</button>
                                     </div>
                                     <span className="text-body-secondary">
-                                        <i className="fa-regular fa-heart" onClick={() => favs(item)}></i>
+                                        <i className="fa-regular fa-heart" onClick={() => actions.addToFavorites({name: item.name, type: 'Character'})}></i>
                                     </span>
                                 </div>
                             </div>

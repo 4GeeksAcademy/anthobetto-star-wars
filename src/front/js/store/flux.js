@@ -15,6 +15,10 @@ const getState = ({ getStore, getActions, setStore }) => {
             planets: [],
             starships: [],
             characterInformation: {},
+            planetInformation: {},
+            starshipsInformation: {},
+            favorites: [],
+
         },
         actions: {
             getMessage: async () => {
@@ -158,8 +162,39 @@ const getState = ({ getStore, getActions, setStore }) => {
 				if (!response.ok) { return }
 				const data = await response.json();
 				setStore( {characterInformation:  data.result.properties })
-			}
-
+			},
+            getPlanetInformation: async (uid) => {
+				const response = await fetch(`${getStore().hostStarWarsAPI}/planets/${uid}`)
+				if (!response.ok) { return }
+				const data = await response.json();
+				setStore( {planetInformation:  data.result.properties })
+			},
+            getStarshipsInformation: async (uid) => {
+				const response = await fetch(`${getStore().hostStarWarsAPI}/starships/${uid}`)
+				if (!response.ok) { return }
+				const data = await response.json();
+				setStore( {starshipsInformation:  data.result.properties })
+			},
+            clearCharacterInformation: () => {
+                setStore({characterInformation: {}})
+            },
+            clearPlanetInformation: () => {
+                setStore({planetInformation: {}})
+            },
+            clearStarshipsInformation: () => {
+                setStore({starshipsInformation: {}})
+            },
+            addToFavorites: (uid) => {
+                if (//!getStore().favorites.includes(uid))// 
+                    !getStore().favorites.find((favItem) => favItem === uid))
+                    {
+                setStore({ favorites: [...getStore().favorites, uid]})}
+                else {
+                alert(`El item ${uid} ya está en favoritos`);}
+            },
+            removeFromFavorites: (uid) => {
+                setStore({ favorites: getStore().favorites.filter((favItem) => favItem !== uid)})
+            },
         }
     };
 };
