@@ -59,7 +59,7 @@ export const Planets = () => {
                                         <button type="button" className="btn btn-sm bg-warning" onClick={() => viewMore(item.uid)}>View more</button>
                                     </div>
                                     <span className="text-body-secondary">
-                                        <i className="fa-regular fa-heart"></i>
+                                        <i className="fa-regular fa-heart" onClick={() => actions.addToFavorites({name: item.name, type: 'Planets'})}></i>
                                     </span>
                                 </div>
                             </div>
