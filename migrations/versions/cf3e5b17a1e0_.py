@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 2c4749891cb6
+Revision ID: cf3e5b17a1e0
 Revises: 
-Create Date: 2024-09-30 19:06:23.602844
+Create Date: 2024-10-02 19:32:31.021681
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '2c4749891cb6'
+revision = 'cf3e5b17a1e0'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -29,22 +29,6 @@ def upgrade():
     sa.Column('birth_year', sa.String(), nullable=True),
     sa.PrimaryKeyConstraint('id')
     )
-    op.create_table('favorites_planets',
-    sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('user_id', sa.String(), nullable=False),
-    sa.Column('planet_id', sa.String(), nullable=False),
-    sa.PrimaryKeyConstraint('id'),
-    sa.UniqueConstraint('planet_id'),
-    sa.UniqueConstraint('user_id')
-    )
-    op.create_table('favorites_starships',
-    sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('user_id', sa.String(), nullable=False),
-    sa.Column('starship_id', sa.String(), nullable=False),
-    sa.PrimaryKeyConstraint('id'),
-    sa.UniqueConstraint('starship_id'),
-    sa.UniqueConstraint('user_id')
-    )
     op.create_table('planets',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('name', sa.String(), nullable=False),
@@ -55,11 +39,12 @@ def upgrade():
     sa.Column('population', sa.String(), nullable=True),
     sa.Column('climate', sa.String(), nullable=True),
     sa.Column('terrain', sa.String(), nullable=True),
-    sa.Column('surface', sa.String(), nullable=True),
+    sa.Column('surface_water', sa.String(), nullable=True),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('starships',
     sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('name', sa.String(), nullable=False),
     sa.Column('starship_class', sa.String(), nullable=False),
     sa.Column('manufacturer', sa.String(), nullable=False),
     sa.Column('length', sa.String(), nullable=False),
@@ -87,6 +72,22 @@ def upgrade():
     sa.Column('user_id', sa.Integer(), nullable=True),
     sa.Column('character_id', sa.Integer(), nullable=True),
     sa.ForeignKeyConstraint(['character_id'], ['characters.id'], ),
+    sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
+    sa.PrimaryKeyConstraint('id')
+    )
+    op.create_table('favorites_planets',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('user_id', sa.Integer(), nullable=True),
+    sa.Column('planet_id', sa.Integer(), nullable=True),
+    sa.ForeignKeyConstraint(['planet_id'], ['planets.id'], ),
+    sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
+    sa.PrimaryKeyConstraint('id')
+    )
+    op.create_table('favorites_starships',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('user_id', sa.Integer(), nullable=True),
+    sa.Column('startship_id', sa.Integer(), nullable=True),
+    sa.ForeignKeyConstraint(['startship_id'], ['starships.id'], ),
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
@@ -136,11 +137,11 @@ def downgrade():
     op.drop_table('posts')
     op.drop_table('media')
     op.drop_table('followers')
+    op.drop_table('favorites_starships')
+    op.drop_table('favorites_planets')
     op.drop_table('favorites_characters')
     op.drop_table('users')
     op.drop_table('starships')
     op.drop_table('planets')
-    op.drop_table('favorites_starships')
-    op.drop_table('favorites_planets')
     op.drop_table('characters')
     # ### end Alembic commands ###
