@@ -103,6 +103,13 @@ class FavoritesCharacters(db.Model):
     character_id = db.Column(db.Integer, db.ForeignKey('characters.id'))
     character_to = db.relationship('Characters', foreign_keys=[character_id], backref=db.backref('user_to', lazy='select'))
 
+    def __repr__(self):
+        return f'post: {self.id} - {self.name}'
+    
+    def serialize(self):
+        return {"name": self.name,
+                "type": 'Characters'}
+
 
 class Planets(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -133,12 +140,22 @@ class Planets(db.Model):
 
 class FavoritesPlanets(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.String, unique=True, nullable=False)
-    planet_id = db.Column(db.String, unique=True, nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    user_to = db.relationship('Users', foreign_keys=[user_id], backref=db.backref('favorites_planets', lazy='select'))
+    planet_id = db.Column(db.Integer, db.ForeignKey('planets.id'))
+    planet_to = db.relationship('Planets', foreign_keys=[planet_id], backref=db.backref('planet_to', lazy='select'))
+
+    def __repr__(self):
+        return f'post: {self.id} - {self.name}'
+    
+    def serialize(self):
+        return {"name": self.name,
+                "type": 'Planets'}
 
 
 class Starships(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String, nullable=False)
     starship_class = db.Column(db.String, nullable=False)
     manufacturer = db.Column(db.String, nullable=False)
     length = db.Column(db.String, nullable=False)
@@ -149,7 +166,30 @@ class Starships(db.Model):
     mglt = db.Column(db.String, nullable=False)
     cargo_capacity = db.Column(db.String, nullable=False)
 
+    def __repr__(self):
+        return f'post: {self.id} - {self.name}'
+    
+    def serialize(self):
+        return {"name": self.name,
+                "starship_class": self.starship_class,
+                "manufacturer": self.manufacturer, 
+                "length": self.length,
+                "crew": self.crew,
+                "passengers": self.passengers,
+                "max_atmosphering_speed": self.max_atmosphering_speed,
+                "mglt": self.mglt,
+                "cargo_capacity": self.cargo_capacity,}
+
 class FavoritesStarships(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.String, unique=True, nullable=False)
-    starship_id = db.Column(db.String, unique=True, nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    user_to = db.relationship('Users', foreign_keys=[user_id], backref=db.backref('favorites_starships', lazy='select'))
+    startship_id = db.Column(db.Integer, db.ForeignKey('starships.id'))
+    startship_to = db.relationship('Starships', foreign_keys=[startship_id], backref=db.backref('startship_to', lazy='select'))
+
+    def __repr__(self):
+        return f'post: {self.id} - {self.name}'
+    
+    def serialize(self):
+        return {"name": self.name,
+                "type": 'Starships'}
