@@ -28,6 +28,7 @@ const injectContext = PassedComponent => {
 		 store, instead use actions, like this:
 		 */
 		useEffect(() => {
+			state.actions.isLogged();
 			state.actions.getMessage(); // <---- calling this function from the flux.js actions
 		}, []);
 

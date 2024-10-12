@@ -19,11 +19,12 @@ import { Starships } from "./pages/Starships.jsx";
 import { CharacterInformation } from "./pages/CharacterInformation.jsx";
 import { PlanetInformation } from "./pages/PlanetInformation.jsx";
 import { StarshipsInformation } from "./pages/StarshipsInformation.jsx";
+import { Login } from "./pages/Login.jsx";
+import { SignUp } from "./pages/SignUp.jsx";
+import { Dashboard } from "./pages/Dashboard.jsx";
+import { Protected } from "./pages/Protected.jsx";
 
-//create your first component
 const Layout = () => {
-    //the basename is used when your project is published in a subdirectory and not in the root of the domain
-    // you can set the basename on the .env file located at the root of this project, E.g: BASENAME=/react-hello-webapp/
     const basename = process.env.BASENAME || "";
     if (!process.env.BACKEND_URL || process.env.BACKEND_URL == "") return <BackendURL/ >;
     return (
@@ -42,6 +43,10 @@ const Layout = () => {
                         <Route element={<StarshipsInformation />} path="/starships/:uid"/>
                         <Route element={<Contacts />} path="/contacts" />
                         <Route element={<EditContact />} path="/edit-contact" />
+                        <Route element={<Login />} path="/login" />
+                        <Route element={<SignUp />} path="/sign-up" />
+                        <Route element={<Dashboard/>} path="/dashboard" />
+                        <Route element={<Protected/>} path="/protected" />
                         <Route element={<h1>Not found!</h1>} path="*"/>
                     </Routes>
                     <Footer />

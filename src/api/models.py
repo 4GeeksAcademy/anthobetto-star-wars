@@ -107,7 +107,7 @@ class FavoritesCharacters(db.Model):
         return f'post: {self.id} - {self.name}'
     
     def serialize(self):
-        return {"name": self.name,
+        return {"user_id": self.user_id,
                 "type": 'Characters'}
 
 
