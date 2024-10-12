@@ -2,11 +2,23 @@ import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { Context } from "../store/appContext.js";
 import { FavsStarWars } from "./FavsStarWars.jsx";
+import { useNavigate } from "react-router-dom";
 
 export const Navbar = () => {
-	const { store } = useContext(Context) // 3. 2. 1
-	return (
-		<nav className="navbar navbar-dark bg-warning">
+  const { store, actions } = useContext(Context)
+  const navigate = useNavigate()
+  const handleLogin = () => {
+    if (store.isLoged) {
+      actions.logout()
+      navigate('/')
+    }
+    else {
+      navigate("/login")
+    }
+  }
+
+  return (
+    <nav className="navbar navbar-dark bg-warning">
       <div className="container-fluid d-flex justify-content-between mx-md-4 mt-2 mb-1">
         <div>
           <Link className="navbar-brand" to="/">
@@ -36,11 +48,19 @@ export const Navbar = () => {
               </Link>
             </li>
             <li className="nav-item">
-              <FavsStarWars/>
+              <button
+                className="nav-link btn btn-link link-secondary"
+                onClick={handleLogin}
+              >
+                {store.isLoged ? 'Logout' : 'Login'}
+              </button>
+            </li>
+            <li className="nav-item">
+              <FavsStarWars />
             </li>
           </ul>
         </div>
       </div>
     </nav>
-	);
+  );
 };

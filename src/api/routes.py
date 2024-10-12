@@ -23,7 +23,7 @@ def handle_hello():
     return response_body, 200
 
 
-@api.route("/login", methods=["POST"])  # VI
+@api.route("/login", methods=["POST"]) 
 def login():
     response_body = {}
     data = request.json
@@ -34,9 +34,10 @@ def login():
         response_body["message"]="Bad email or password"
         return response_body, 401
     print(user.serialize())
-    access_token = create_access_token(identity={'email': user.email, "is_active": user.is_active})
+    access_token = create_access_token(identity={'email': user.email, 'user_id': user.id, 'is_admin': user.is_admin})
     response_body["message"] = f'Bienvenida {email}'
     response_body["access_token"] = access_token
+    response_body['results'] = user.serialize()
     return response_body, 200
 
 
@@ -44,7 +45,6 @@ def login():
 @jwt_required()
 def protected():
     response_body = {}
-    # Access the identity of the current user with get_jwt_identity
     current_user = get_jwt_identity()
     response_body["logged_in_as"]= current_user
     return response_body, 200
@@ -132,6 +132,24 @@ def post(id):
         response_body['result'] = {}
         return response_body, 200
 
+
+@api.route("/sign-up", methods=['POST'])
+def signup():
+    response_body = {}
+    data = request.json
+    row = Users(email = data.get("email"),
+                first_name = data.get("name"),
+                last_name = data.get("lastname"),
+                password = data.get("password"),
+                is_active = True,
+                is_admin = False)
+    
+    db.session.add(row)
+    db.session.commit()
+
+    response_body['message'] = f"Bienvenido"
+    response_body['results'] = {}
+    return response_body, 200
 
 @api.route('/characters', methods=['GET'])
 def characters():

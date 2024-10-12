@@ -18,6 +18,12 @@ const getState = ({ getStore, getActions, setStore }) => {
             planetInformation: {},
             starshipsInformation: {},
             favorites: [],
+            isLoged: false,
+            alert: {
+                text: 'This is an Alert!',
+                background: 'danger',
+                visible: false
+            },
 
         },
         actions: {
@@ -32,7 +38,25 @@ const getState = ({ getStore, getActions, setStore }) => {
                 // don't forget to return something, that is how the async resolves
                 return data;
             },
-            setCurrentContacts: (contacts) => { setStore({currentContacts: contacts}) },
+            login: async (dataToSend) => {
+                const uri = `${process.env.BACKEND_URL}/api/login`;
+                const options = {
+                    method: 'POST',
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(dataToSend)
+                };
+                const response = await fetch(uri, options)
+                if (!response.ok) {
+                    console.log('Error', response.status, response.statusText)
+                };
+                const data = await response.json();
+                console.log(data)
+                localStorage.setItem('token', data.token);
+                console.log('Error en la conexión', error);
+            },
+            setCurrentContacts: (contacts) => { setStore({ currentContacts: contacts }) },
             createUser: async () => {
                 const uri = `${getStore().host}/agendas/${getStore().user}`;
                 const options = {
@@ -112,88 +136,158 @@ const getState = ({ getStore, getActions, setStore }) => {
 
             getCharacters: async () => {
                 if (localStorage.getItem('characters')) {
-					setStore({ characters: JSON.parse(localStorage.getItem('characters'))})
-					return
-				}
-				const response = await fetch(`${getStore().hostStarWarsAPI}/people?page=${getStore().currentPagePeople}&limit=10`)
-				console.log(response);
-				if (!response.ok) {
-					console.log('Error: ', response.status, response.statusText)
-					return
-				}
-				const data = await response.json()
-                setStore({characters: data.results})
+                    setStore({ characters: JSON.parse(localStorage.getItem('characters')) })
+                    return
+                }
+                const response = await fetch(`${getStore().hostStarWarsAPI}/people?page=${getStore().currentPagePeople}&limit=10`)
+                console.log(response);
+                if (!response.ok) {
+                    console.log('Error: ', response.status, response.statusText)
+                    return
+                }
+                const data = await response.json()
+                setStore({ characters: data.results })
                 localStorage.setItem('characters', JSON.stringify(data.results))
-			},
+            },
 
             getPlanets: async () => {
                 if (localStorage.getItem('planets')) {
-					setStore({ planets: JSON.parse(localStorage.getItem('planets'))})
-					return
-				}
-				const response = await fetch(`${getStore().hostStarWarsAPI}/planets`)
-				console.log(response);
-				if (!response.ok) {
-					console.log('Error: ', response.status, response.statusText)
-					return
-				}
-				const data = await response.json()
-                setStore({planets: data.results})
+                    setStore({ planets: JSON.parse(localStorage.getItem('planets')) })
+                    return
+                }
+                const response = await fetch(`${getStore().hostStarWarsAPI}/planets`)
+                console.log(response);
+                if (!response.ok) {
+                    console.log('Error: ', response.status, response.statusText)
+                    return
+                }
+                const data = await response.json()
+                setStore({ planets: data.results })
                 localStorage.setItem('planets', JSON.stringify(data.results))
-			},
+            },
 
             getStarships: async () => {
                 if (localStorage.getItem('starships')) {
-					setStore({ starships: JSON.parse(localStorage.getItem('starships'))})
-					return
-				}
-				const response = await fetch(`${getStore().hostStarWarsAPI}/starships`)
-				console.log(response);
-				if (!response.ok) {
-					console.log('Error: ', response.status, response.statusText)
-					return
-				}
-				const data = await response.json()
-                setStore({starships: data.results})
+                    setStore({ starships: JSON.parse(localStorage.getItem('starships')) })
+                    return
+                }
+                const response = await fetch(`${getStore().hostStarWarsAPI}/starships`)
+                console.log(response);
+                if (!response.ok) {
+                    console.log('Error: ', response.status, response.statusText)
+                    return
+                }
+                const data = await response.json()
+                setStore({ starships: data.results })
                 localStorage.setItem('starships', JSON.stringify(data.results))
-			},
+            },
             getCharacterInformation: async (uid) => {
-				const response = await fetch(`${getStore().hostStarWarsAPI}/people/${uid}`)
-				if (!response.ok) { return }
-				const data = await response.json();
-				setStore( {characterInformation:  data.result.properties })
-			},
+                const response = await fetch(`${getStore().hostStarWarsAPI}/people/${uid}`)
+                if (!response.ok) { return }
+                const data = await response.json();
+                setStore({ characterInformation: data.result.properties })
+            },
             getPlanetInformation: async (uid) => {
-				const response = await fetch(`${getStore().hostStarWarsAPI}/planets/${uid}`)
-				if (!response.ok) { return }
-				const data = await response.json();
-				setStore( {planetInformation:  data.result.properties })
-			},
+                const response = await fetch(`${getStore().hostStarWarsAPI}/planets/${uid}`)
+                if (!response.ok) { return }
+                const data = await response.json();
+                setStore({ planetInformation: data.result.properties })
+            },
             getStarshipsInformation: async (uid) => {
-				const response = await fetch(`${getStore().hostStarWarsAPI}/starships/${uid}`)
-				if (!response.ok) { return }
-				const data = await response.json();
-				setStore( {starshipsInformation:  data.result.properties })
-			},
+                const response = await fetch(`${getStore().hostStarWarsAPI}/starships/${uid}`)
+                if (!response.ok) { return }
+                const data = await response.json();
+                setStore({ starshipsInformation: data.result.properties })
+            },
             clearCharacterInformation: () => {
-                setStore({characterInformation: {}})
+                setStore({ characterInformation: {} })
             },
             clearPlanetInformation: () => {
-                setStore({planetInformation: {}})
+                setStore({ planetInformation: {} })
             },
             clearStarshipsInformation: () => {
-                setStore({starshipsInformation: {}})
+                setStore({ starshipsInformation: {} })
             },
             addToFavorites: (uid) => {
                 if (//!getStore().favorites.includes(uid))// 
-                    !getStore().favorites.find((favItem) => favItem === uid))
-                    {
-                setStore({ favorites: [...getStore().favorites, uid]})}
+                    !getStore().favorites.find((favItem) => favItem === uid)) {
+                    setStore({ favorites: [...getStore().favorites, uid] })
+                }
                 else {
-                alert(`El item ${uid} ya está en favoritos`);}
+                    alert(`El item ${uid} ya está en favoritos`);
+                }
             },
             removeFromFavorites: (uid) => {
-                setStore({ favorites: getStore().favorites.filter((favItem) => favItem !== uid)})
+                setStore({ favorites: getStore().favorites.filter((favItem) => favItem !== uid) })
+            },
+            login: async (dataToSend) => {
+                const uri = `${process.env.BACKEND_URL}/api/login`;
+                const options = {
+                    method: 'POST',
+                    headers: {
+                        "Content-Type": 'application/json'
+                    },
+                    body: JSON.stringify(dataToSend)
+                }
+                const response = await fetch(uri, options);
+                if (!response.ok) {
+                    console.log('Error', response.status, response.statusText);
+                    return;
+                }
+                const data = await response.json()
+                console.log(data)
+                localStorage.setItem('token', data.access_token)
+                localStorage.setItem('user', JSON.stringify(data.results))
+                setStore({ isLoged: true, user: data.results.email })
+            },
+            logout: () => {
+                setStore({ isLoged: false, user: '' });
+                localStorage.removeItem('token')
+                localStorage.removeItem('user')
+            },
+            isLogged: () => {
+                const token = localStorage.getItem('token')
+                if (token) {
+                    const userData = JSON.parse(localStorage.getItem('user'));
+                    console.log(userData)
+                    setStore({ isLoged: true, user: userData.email })
+                }
+            },
+            accessProtected: async () => {
+                const token = localStorage.getItem('token')
+                const uri = `${process.env.BACKEND_URL}/api/protected`;
+                const options = {
+                    method: 'GET',
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": `Bearer ${token}`
+                    }
+                };
+                const response = await fetch(uri, options);
+                if (!response.ok) {
+                    console.log('error', response.status, response.statusText);
+                    return
+                }
+                const data = await response.json();
+                console.log(data);
+            },
+            newSignUp: async (dataToSend) => {
+                const uri = `${process.env.BACKEND_URL}/api/sign-up`;
+                const options = {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(dataToSend)
+                };
+                    const response = await fetch(uri, options);
+                    if (!response.ok) {
+                        console.log("Error:", response.status);
+                        return;
+                    }
+                    const data = await response.json();
+                    console.log(data);
+                    setStore({ isLoged: true });
             },
         }
     };
